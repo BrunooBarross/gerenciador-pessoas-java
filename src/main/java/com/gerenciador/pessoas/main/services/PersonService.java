@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.gerenciador.pessoas.main.entities.Person;
 import com.gerenciador.pessoas.main.repositories.PersonRepository;
 import com.gerenciador.pessoas.main.services.exceptions.ResourceNotFoundException;
+import com.gerenciador.pessoas.main.services.exceptions.ResourceUnprocessableException;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -33,6 +34,7 @@ public class PersonService {
 
 	public Person update(Integer id, Person obj) {
 		try {
+			System.out.println(obj.getBirthDate());
 			Person entity = repository.getReferenceById(id);
 			updateData(entity, obj);
 			return repository.save(entity);
@@ -42,6 +44,9 @@ public class PersonService {
 	}
 
 	private void updateData(Person entity, Person obj) {
+		if(obj.getName() == null && obj.getBirthDate() == null) {
+			throw new ResourceUnprocessableException("fields cannot be empty");
+		}
 		if (obj.getName() != null && obj.getName().length() > 0) {
 			entity.setName(obj.getName());
 		}
