@@ -10,22 +10,43 @@ import com.gerenciador.pessoas.main.entities.User;
 import com.gerenciador.pessoas.main.repositories.UserRepository;
 import com.gerenciador.pessoas.main.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService {
-	
+
 	@Autowired
 	private UserRepository repository;
-	
+
 	public List<User> findAll() {
 		return repository.findAll();
 	}
-	
+
 	public User findById(Integer id) {
 		Optional<User> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
-	
+
 	public User insert(User obj) {
 		return repository.save(obj);
+	}
+
+	public User update(Integer id, User obj) {
+		try {
+			User entity = repository.getReferenceById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
+	}
+
+	private void updateData(User entity, User obj) {
+		if (obj.getName() != null && obj.getName().length() > 0) {
+			entity.setName(obj.getName());
+		}
+		if (obj.getBirthDate() != null) {
+			entity.setBirthDate(obj.getBirthDate());
+		}
 	}
 }
