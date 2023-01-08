@@ -6,42 +6,42 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gerenciador.pessoas.main.entities.User;
-import com.gerenciador.pessoas.main.repositories.UserRepository;
+import com.gerenciador.pessoas.main.entities.Person;
+import com.gerenciador.pessoas.main.repositories.PersonRepository;
 import com.gerenciador.pessoas.main.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class UserService {
+public class PersonService {
 
 	@Autowired
-	private UserRepository repository;
+	private PersonRepository repository;
 
-	public List<User> findAll() {
+	public List<Person> findAll() {
 		return repository.findAll();
 	}
 
-	public User findById(Integer id) {
-		Optional<User> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+	public Person findById(Integer id) {
+		Optional<Person> obj = repository.findById(id);
+		return obj.orElseThrow(() -> new ResourceNotFoundException("Person not found for id" + id));
 	}
 
-	public User insert(User obj) {
+	public Person insert(Person obj) {
 		return repository.save(obj);
 	}
 
-	public User update(Integer id, User obj) {
+	public Person update(Integer id, Person obj) {
 		try {
-			User entity = repository.getReferenceById(id);
+			Person entity = repository.getReferenceById(id);
 			updateData(entity, obj);
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException("Person not found for id" + id);
 		}
 	}
 
-	private void updateData(User entity, User obj) {
+	private void updateData(Person entity, Person obj) {
 		if (obj.getName() != null && obj.getName().length() > 0) {
 			entity.setName(obj.getName());
 		}

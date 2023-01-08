@@ -21,32 +21,32 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.gerenciador.pessoas.main.entities.User;
-import com.gerenciador.pessoas.main.services.UserService;
+import com.gerenciador.pessoas.main.entities.Person;
+import com.gerenciador.pessoas.main.services.PersonService;
 
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/users")
-public class UserResource {
+public class PersonResource {
 
 	@Autowired
-	private UserService service;
+	private PersonService service;
 
 	@GetMapping
-	public ResponseEntity<List<User>> findAll() {
-		List<User> lst = service.findAll();
+	public ResponseEntity<List<Person>> findAll() {
+		List<Person> lst = service.findAll();
 		return ResponseEntity.ok().body(lst);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<User> findById(@PathVariable Integer id) {
-		User obj = service.findById(id);
+	public ResponseEntity<Person> findById(@PathVariable Integer id) {
+		Person obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	@PostMapping
-	public ResponseEntity<User> insert(@RequestBody @Valid User obj) {
+	public ResponseEntity<Person> insert(@RequestBody @Valid Person obj) {
 		obj = service.insert(obj);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId())
 				.toUri();
@@ -54,7 +54,7 @@ public class UserResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<User> update(@PathVariable Integer id, @RequestBody User obj) {
+	public ResponseEntity<Person> update(@PathVariable Integer id, @RequestBody Person obj) {
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}

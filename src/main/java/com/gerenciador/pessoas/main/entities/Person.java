@@ -17,7 +17,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_user")
-public class User implements Serializable {
+public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +30,11 @@ public class User implements Serializable {
 	@Column(nullable = false)
 	private Date birthDate;
 
-	public User() {
+	public Person() {
 
 	}
 
-	public User(Integer id, String name, Date birthDate) {
+	public Person(Integer id, String name, Date birthDate) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -78,7 +78,7 @@ public class User implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Person other = (Person) obj;
 		return Objects.equals(id, other.id);
 	}
 
