@@ -1,7 +1,9 @@
 package com.gerenciador.pessoas.main.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,16 +13,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tb_user")
+@Table(name = "TB_PERSON")
 public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@Column(name = "PERSON_ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@NotBlank(message = "Campo não informado")
 	@Column(nullable = false, length = 45)
@@ -29,6 +34,9 @@ public class Person implements Serializable {
 	@DateTimeFormat()
 	@Column(nullable = false)
 	private Date birthDate;
+
+	@OneToMany(mappedBy = "person")
+	private List<Address> address = new ArrayList<>();
 
 	public Person() {
 
@@ -65,6 +73,14 @@ public class Person implements Serializable {
 		this.birthDate = birthDate;
 	}
 
+	public List<Address> getAddress() {
+		return address;
+	}
+
+	public void setAddress(List<Address> address) {
+		this.address = address;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -80,6 +96,11 @@ public class Person implements Serializable {
 			return false;
 		Person other = (Person) obj;
 		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", birthDate=" + birthDate + "]";
 	}
 
 }

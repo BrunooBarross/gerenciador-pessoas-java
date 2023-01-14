@@ -34,7 +34,6 @@ public class PersonService {
 
 	public Person update(Integer id, Person obj) {
 		try {
-			System.out.println(obj.getBirthDate());
 			Person entity = repository.getReferenceById(id);
 			updateData(entity, obj);
 			return repository.save(entity);
