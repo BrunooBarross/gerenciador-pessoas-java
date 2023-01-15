@@ -8,6 +8,9 @@ import com.gerenciador.pessoas.main.entities.Address;
 public interface AddressRepository extends JpaRepository<Address, Integer> {
 
 	@Query(nativeQuery = true, value = "SELECT * FROM TB_ADDRESS WHERE PERSON_ID = (:id) AND TYPE_ADDRESS = (:type)")
-	Address findByIdAndTypeAddress(Integer id, Integer type);
+	Address getByIdAndTypeAddress(Integer id, Integer type);
+	
+	@Query(nativeQuery = true, value = "SELECT * FROM TB_ADDRESS WHERE ID = (:id) AND PERSON_ID = (:personId)")
+	Address getByIdAndUserId(Integer id, Integer personId);
 
 }

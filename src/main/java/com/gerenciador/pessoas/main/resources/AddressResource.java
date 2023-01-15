@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,11 +33,17 @@ public class AddressResource {
 	private AddressService service;
 
 	@PostMapping
-	public ResponseEntity<Address> insert(@RequestHeader(value = "userId") String userId, @RequestBody @Valid Address obj) {
-		obj = service.insert(userId, obj);
+	public ResponseEntity<Address> insert(@RequestHeader(value = "personId") Integer personId, @RequestBody @Valid Address obj) {
+		obj = service.insert(personId, obj);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId())
 				.toUri();
 		return ResponseEntity.created(location).body(obj);
+	}
+	
+	@PutMapping(value = "/main/{id}")
+	public ResponseEntity<Address> update(@PathVariable Integer id, @RequestHeader(value = "personId") Integer personId) {
+		Address obj = service.updateTypeAddress(id, personId);
+		return ResponseEntity.ok().body(obj);
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
