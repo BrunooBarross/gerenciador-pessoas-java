@@ -22,12 +22,18 @@ $ git clone https://github.com/BrunooBarross/gerenciador-pessoas-java
 
 $ Na sua IDE importe um novo projeto maven existente e selecione a pasta gerenciador-pessoas-java
 
+$ Dê run as Spring Boot App na classe MainApplication 
+
+```
+
+```
+- Para acessar o console do banco em memória acesse em um navegador a url: http://localhost:8080/h2-console
+
 ```
 
 ## 🚀 API:
 
 - Caminho das rotas - http://localhost:8080
-
 
 - Nota: Na pasta Insomnia possui um arquivo para importação no programa Insomnia. 
 - Leia: https://docs.insomnia.rest/insomnia/import-export-data
