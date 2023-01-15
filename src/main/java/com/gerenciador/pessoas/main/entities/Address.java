@@ -17,6 +17,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "TB_ADDRESS")
@@ -28,9 +29,11 @@ public class Address implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@NotBlank(message = "Campo não informado")
+	@Size(min =3, max = 40, message = "Min 3 - Max: 100")
 	@Column(nullable = false, length = 100)
 	private String logradouro;
 	@NotBlank(message = "Campo não informado")
+	@Size(min =3, max = 40, message = "Min 3 - Max: 20")
 	@Column(nullable = false, length = 20)
 	private String cep;
 	@NotBlank(message = "Campo não informado")
@@ -38,6 +41,7 @@ public class Address implements Serializable {
 	@Column(nullable = false)
 	private String numero;
 	@NotBlank(message = "Campo não informado")
+	@Size(min =3, max = 40, message = "Min 3 - Max: 40")
 	@Column(nullable = false, length = 40)
 	private String cidade;
 	private Integer typeAddress;

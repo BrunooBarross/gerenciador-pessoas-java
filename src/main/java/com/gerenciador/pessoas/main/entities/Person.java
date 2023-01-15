@@ -15,8 +15,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "TB_PERSON")
@@ -27,7 +27,8 @@ public class Person implements Serializable {
 	@Column(name = "PERSON_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@NotBlank(message = "Campo não informado")
+	@NotNull(message = "Campo não informado")
+	@Size(min = 3, max = 45, message = "nome - Min 3 e max 45 caracteres")
 	@Column(nullable = false, length = 45)
 	private String name;
 	@NotNull(message = "Campo não informado - deve serguir o padrão '2001-01-01'")
